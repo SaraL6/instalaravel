@@ -170,13 +170,13 @@
                                 <!-- Comment -->
                                  <div class="comments" id="comments{{$post->id}}">
                                     @if (count($post->comments) > 2)
-                                    <button class="btn" onclick="showComments({{$post->id}})" id="Showbtn" value="Click" type='button'>View all {{count($post->comments)}} comments</button>
+                                    <button class="btn Showbtn" onclick="showComments({{$post->id}})" id="Showbtn" value="Click" type='button'>View all {{count($post->comments)}} comments</button>
                                         {{-- <a href="/p/{{ $post->id }}" class="text-muted">View all {{count($post->comments)}} comments</a> --}}
                                            @endif
                                     <div id="commentWrapper{{$post->id}}">
 
                                     @foreach ($post->comments->sortByDesc("created_at")->take(2) as $comment)
-                                           <p class="ml-3 mb-1"><strong>{{ $comment->user->name }}</strong>  {{ $comment->body }}</p>
+                                           <p class="ml-3 mb-1"><strong>{{ $comment->user->username }}</strong>  {{ $comment->body }}</p>
                                     @endforeach
 
                                         </div>
@@ -185,7 +185,7 @@
                                 </div>
 
                                 <div id="showComments{{$post->id}}"hidden>
-                                             @foreach ($post->comments->sortByDesc("created_at") as $comment)
+                                             @foreach ($post->comments as $comment)
                                                 <p class="mb-1 ml-3"><strong>{{ $comment->user->username }}</strong>  {{ $comment->body }}</p>
                                              @endforeach
                                 </div>
@@ -296,7 +296,9 @@
 
 @section('exscript')
     <script>
-        let output;
+
+
+
         $(".save-data").click(function(event){
             event.preventDefault();
             const postId = event.currentTarget.attributes.id.nodeValue;
@@ -325,21 +327,26 @@
 
                             },
                             success:function(response){
+                                let output="";
                                 $("#body"+postId).val('');
+                                $(".Showbtn").hide();
+
 
                                 console.log(response);
 
 
                                  Object.keys(response).forEach(function (comment){
                                 //  response.forEach(comment => {
-                                 console.log(comment, response[comment]);
-                                 console.log({
-                                     'output' : response[comment].username
-                                 });
-                                     output += '<p class="mb-1"><strong>'+response[comment].username+'</strong> '+response[comment].body+'</p> ';
+                                //  console.log(comment, response[comment]);
+                                //  console.log({
+                                //      'output' : response[comment].username
+                                //  });
+                                      output += '<p class="mb-1"><strong>'+response[comment].username+'</strong> '+response[comment].body+'</p> ';
 
                                 });
                                  $("#commentWrapper"+postId).html(output);
+                                 $("#showComments"+postId).html(output);
+
 
                             },
                             });
@@ -381,9 +388,6 @@
 
             $("#showComments"+id)[0].hidden = false;
             $("#comments"+id)[0].hidden = true;
-            $("#commentWrapper"+id)[0].hidden = false;
-
-
 
 
         }
