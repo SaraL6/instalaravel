@@ -65,7 +65,7 @@
                         <div class="card-body px-3 py-2">
 
                             <div class="d-flex flex-row">
-                                {{-- <form method="POST" action="{{url()->action('LikeController@update2', ['like'=>$post->id])}}">
+                                 <form method="POST" action="{{url()->action('LikeController@update2', ['like'=>$post->id])}}">
                                     @csrf
                                     @if (true)
                                         <input id="inputid" name="update" type="hidden" value="1">
@@ -75,7 +75,7 @@
 
                                     @if($post->like->isEmpty())
                                         <button type="submit" class="btn pl-0">
-                                            <i class="far fa-heart fa-2x"></i>
+                                            <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
                                         </button>
                                     @else
 
@@ -95,18 +95,18 @@
                                             </button>
                                         @else
                                             <button type="submit" class="btn pl-0">
-                                                <i class="far fa-heart fa-2x"></i>
+                                                <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
                                             </button>
                                         @endif
 
                                     @endif
 
-                                    <a href="/p/{{ $post->id }}" class="btn pl-0">
-                                        <i class="far fa-comment fa-2x"></i>
-                                    </a>
+                                    <button class="btn pl-0 commentIcon"  data-attribute="{{ $post->id }}" >
+                                        <i class="fa fa-comment-o fa-2x" aria-hidden="true" ></i>
+                                    </button>
 
                                     <!-- Share Button trigger modal -->
-                                    <button type="button" class="btn pl-0 pt-0" data-toggle="modal" data-target="#sharebtn{{$post->id}}">
+                                    <button type="button" class="btn pl-0 pt-1" data-toggle="modal" data-target="#sharebtn{{$post->id}}">
                                         <svg aria-label="Share Post" class="_8-yf5 " fill="#262626" height="22" viewBox="0 0 48 48" width="21"><path d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path></svg>
                                     </button>
 
@@ -125,7 +125,7 @@
                                         </div>
                                     </div>
 
-                                </form> --}}
+                                </form>
                             </div>
                             <div class="flex-row">
 
@@ -204,7 +204,7 @@
                                 <div class="form-group mb-0  text-muted">
                                     <div class="input-group is-invalid">
                                         <input type="hidden" name="post_id" value="{{$post->id}}">
-                                        <textarea class="form-control" id="body{{$post->id}}" name='body' rows="1" cols="1" placeholder="Add a comment..."value="{{$post->comment}}"></textarea>
+                                        <textarea class="form-control addComment" id="body{{$post->id}}" name='body' rows="1" cols="1" placeholder="Add a comment..."value="{{$post->comment}}"></textarea>
                                         <div class="input-group-append">
                                             <button class="btn btn-md btn-outline-info save-data" type="submit" id="{{$post->id}}">Post</button>
                                         </div>
@@ -391,6 +391,14 @@
 
 
         }
+
+        $(".commentIcon").on('click', function(id){
+
+            event.preventDefault();
+           var postId= $(this).data("attribute");
+                console.log(postId);
+             $("#body"+postId).focus();
+            });
     </script>
 
     {{-- <script>

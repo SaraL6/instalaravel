@@ -21,6 +21,9 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     {{-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 
     <!-- Styles -->
 
@@ -88,7 +91,7 @@
                             </li> --}}
                             <li class="nav-item pl-2 ">
                                 <a href="/profile/{{Auth::user()->id}}" class="nav-link " style="width: 42px; height: 22px; padding-top: 6px;" >
-                                    
+
                                     <img src="{{asset('storage/'.Auth::user()->image)}}" class=" rounded-circle w-100 " style="clip-path: circle(40%)">
                                     {{-- <i class="far fa-user fa-2x"></i> --}}
                                 </a>
