@@ -30,6 +30,7 @@ class LikeController extends Controller
         $like = Like::where('user_id', $user->id)->where('post_id', $id)->first();
 
         if ($like) {
+            // if its true we give it false, if its false we give it true
             $like->State = !$like->State;
             $like->save();
         } else {

@@ -74,7 +74,7 @@
                                     @endif
 
                                     @if($post->like->isEmpty())
-                                        <button type="submit" class="btn pl-0">
+                                        <button type="submit" class="btn pl-0 likeSubmit" >
                                             <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
                                         </button>
                                     @else
@@ -90,11 +90,11 @@
                                         @endforeach
 
                                         @if($state)
-                                            <button type="submit" class="btn pl-0">
+                                            <button type="submit" class="btn pl-0 likeSubmit">
                                                 <i class="fa fa-heart fa-2x" style="color:red"></i>
                                             </button>
                                         @else
-                                            <button type="submit" class="btn pl-0">
+                                            <button type="submit" class="btn pl-0 likeSubmit" >
                                                 <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
                                             </button>
                                         @endif
@@ -296,8 +296,7 @@
 
 @section('exscript')
     <script>
-
-
+//Add Comment
 
         $(".save-data").click(function(event){
             event.preventDefault();
@@ -399,6 +398,15 @@
                 console.log(postId);
              $("#body"+postId).focus();
             });
+
+
+
+            // $('.likeSubmit').click(function(e) {
+
+            //   e.preventDefault();
+            //  //your ajax funtion here
+            //   });
+
     </script>
 
     {{-- <script>
