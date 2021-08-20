@@ -175,7 +175,7 @@
                                            @endif
                                     <div id="commentWrapper{{$post->id}}">
 
-                                    @foreach ($post->comments->sortByDesc("created_at")->take(2) as $comment)
+                                    @foreach ($post->comments->take(3) as $comment)
                                            <p class="ml-3 mb-1"><strong>{{ $comment->user->username }}</strong>  {{ $comment->body }}</p>
                                     @endforeach
 
