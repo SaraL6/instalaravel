@@ -74,8 +74,8 @@
                                     @endif
 
                                     @if($post->like->isEmpty())
-                                        <button type="submit" class="btn pl-0 likeSubmit" >
-                                            <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+                                        <button type="button" class="btn pl-0 likeSubmit" data-attribute="{{ $post->id }}" data-like="{{$post->like}}">
+                                            <i class="fa fa-heart-o fa-2x Like" aria-hidden="true"></i>
                                         </button>
                                     @else
 
@@ -89,15 +89,16 @@
 
                                         @endforeach
 
-                                        @if($state)
-                                            <button type="submit" class="btn pl-0 likeSubmit">
-                                                <i class="fa fa-heart fa-2x" style="color:red"></i>
+                                         @if($state)
+                                            <button type="submit" class="btn pl-0 likeSubmit" id="likeSubmit{{$post->id}}" data-attribute="{{ $post->id }}" data-like="{{$post->like}}">
+                                                <i class="fa fa-heart fa-2x Like" style="color:red"></i>
                                             </button>
+
                                         @else
-                                            <button type="submit" class="btn pl-0 likeSubmit" >
-                                                <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+                                            <button type="submit" class="btn pl-0 likeSubmit" id="likeSubmit{{$post->id}}" data-attribute="{{ $post->id }}" data-like="{{$post->like}}">
+                                                <i class="fa fa-heart-o fa-2x Like" aria-hidden="true"></i>
                                             </button>
-                                        @endif
+                                       @endif
 
                                     @endif
 
@@ -129,12 +130,12 @@
                             </div>
                             <div class="flex-row">
 
-                                {{-- <!-- Likes -->
+                                 <!-- Likes -->
                                 @if (count($post->like->where('State',true)) > 0)
                                     <h6 class="card-title">
                                         <strong>{{ count($post->like->where('State',true)) }} likes</strong>
                                     </h6>
-                                @endif --}}
+                                @endif
 
                                 {{-- Post Caption --}}
 
@@ -395,18 +396,47 @@
 
             event.preventDefault();
            var postId= $(this).data("attribute");
-                console.log(postId);
+
              $("#body"+postId).focus();
             });
 
 
+        $('.likeSubmit').on('click', function(event) {
+            event.preventDefault();
+            var postId= $(this).attr("data-attribute");
+            var postLike=$(this).attr("data-like");
+            var parsedPostLike= JSON.parse(postLike);
+             var state =parsedPostLike[0].State;
 
-            // $('.likeSubmit').click(function(e) {
+              console.log(postId);
+            console.log(state);
 
-            //   e.preventDefault();
-            //  //your ajax funtion here
-            //   });
 
+            let _token   = $('meta[name="csrf-token"]').attr('content');
+
+                $.ajax({
+
+                        type: "POST",
+                        url:  '/like/'+postId,
+                        data: {
+                         postId:postId,
+                         state:state,
+                        _token: _token
+
+
+                        },
+                        success:function(response){
+                            let state="";
+                                     if(state==0) {
+                                             $("#likeSubmit"+postId).html(' <i class="fa fa-heart fa-2x Like" style="color:red"></i>');
+
+                                     }else if(state==1) {
+                                        $("#likeSubmit"+postId).html(' <i class="fa fa-heart fa-2x Like" aria-hidden="true" ></i>');
+                                        }
+
+                         }
+                });
+        });
     </script>
 
     {{-- <script>

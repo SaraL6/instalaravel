@@ -20,7 +20,7 @@ Auth::routes();
 
 
 
- 
+
 
 //  Profile Route
 Route::get('/profile/{user}', 'UserController@index');
@@ -35,7 +35,7 @@ Route::patch('/profile/{user}', 'UserController@update')->name('profile.update')
  Route::delete('/post/delete/{post}', 'PostsController@destroy');
  Route::get('/post/show/{post}', 'PostsController@show')->name('post.show');
  Route::post('like/{like}', 'LikeController@update2')->name('like.create');
- Route::post('/p/{post}', 'PostsController@updatelikes')->name('post.update'); 
+ Route::post('/p/{post}', 'PostsController@updatelikes')->name('post.update');
 
 
 
@@ -46,4 +46,3 @@ Route::post('/posts/{post}/comment', 'CommentController@store')->name('post.comm
 
 
 
- 
