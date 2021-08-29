@@ -74,7 +74,7 @@
                                     @endif
 
                                     @if($post->like->isEmpty())
-                                        <button type="button" class="btn pl-0 likeSubmit" data-attribute="{{ $post->id }}" data-like="{{$post->like}}">
+                                        <button type="submit" class="btn pl-0 likeSubmit" id="likeSubmit{{$post->id}}"  data-attribute="{{ $post->id }}" data-like="{{$post->like}}">
                                             <i class="fa fa-heart-o fa-2x Like" aria-hidden="true"></i>
                                         </button>
                                     @else
@@ -89,16 +89,21 @@
 
                                         @endforeach
 
+
+
+
                                          @if($state)
-                                            <button type="submit" class="btn pl-0 likeSubmit" id="likeSubmit{{$post->id}}" data-attribute="{{ $post->id }}" data-like="{{$post->like}}">
+                                            <button type="submit" class="btn pl-0 likeSubmit" id="likeSubmit{{$post->id}}" data-attribute="{{ $post->id }}" data-like="{{$post->like}}" >
                                                 <i class="fa fa-heart fa-2x Like" style="color:red"></i>
                                             </button>
+
 
                                         @else
                                             <button type="submit" class="btn pl-0 likeSubmit" id="likeSubmit{{$post->id}}" data-attribute="{{ $post->id }}" data-like="{{$post->like}}">
                                                 <i class="fa fa-heart-o fa-2x Like" aria-hidden="true"></i>
                                             </button>
-                                       @endif
+
+                                        @endif
 
                                     @endif
 
@@ -132,8 +137,12 @@
 
                                  <!-- Likes -->
                                 @if (count($post->like->where('State',true)) > 0)
-                                    <h6 class="card-title">
-                                        <strong>{{ count($post->like->where('State',true)) }} likes</strong>
+                                    <h6 class="card-title" id="likeNumber{{$post->id}}" >
+
+                                        <strong id="LikeCount{{$post->id}}" data-likeCount="{{ count($post->like->where('State',true)) }}">{{ count($post->like->where('State',true)) }} likes</strong>
+                                        {{-- @php
+                                        echo '<pre> operation : ', print_r($post->like->where('State',true), true) ,'</pre>';
+                                    @endphp --}}
                                     </h6>
                                 @endif
 
@@ -400,16 +409,19 @@
              $("#body"+postId).focus();
             });
 
-
-        $('.likeSubmit').on('click', function(event) {
+            // $(document).on("click", '.likeSubmit[data-like='$post->like']', function(event) {
+         $('.likeSubmit').on('click', function(event) {
             event.preventDefault();
             var postId= $(this).attr("data-attribute");
-            var postLike=$(this).attr("data-like");
-            var parsedPostLike= JSON.parse(postLike);
-             var state =parsedPostLike[0].State;
+             var postLike=$(this).attr("data-like");
+            var likeCount= $("#LikeCount"+postId).attr("data-likeCount");
 
-              console.log(postId);
-            console.log(state);
+             //console.log(likeCount);
+             //console.log(postLike);
+            //  var parsedPostLike= JSON.parse(postLike);
+            //  var state =parsedPostLike[0]?.State;
+
+            //  console.log("initial state " +  state);
 
 
             let _token   = $('meta[name="csrf-token"]').attr('content');
@@ -419,22 +431,42 @@
                         type: "POST",
                         url:  '/like/'+postId,
                         data: {
-                         postId:postId,
-                         state:state,
+
                         _token: _token
 
 
                         },
                         success:function(response){
-                            let state="";
-                                     if(state==0) {
-                                             $("#likeSubmit"+postId).html(' <i class="fa fa-heart fa-2x Like" style="color:red"></i>');
 
-                                     }else if(state==1) {
-                                        $("#likeSubmit"+postId).html(' <i class="fa fa-heart fa-2x Like" aria-hidden="true" ></i>');
+                            // console.log( response);
+
+                          const state= response[0]?.State;
+                         $(this).attr('data-like', state);
+                          const likeCount= response[1];
+                          const likeNumber= likeCount.length;
+                          //console.log(likeNumber);
+                            console.log( $("#LikeCount"+postId));
+
+                          $("#LikeCount"+postId).attr("data-likeCount",likeNumber);
+
+                          console.log( $("#LikeCount"+postId));
+                                     if(state) {
+
+                                         //  console.log("liked  " + state)
+                                         $("#likeSubmit"+postId).html(' <i class="fa fa-heart fa-2x Like" style="color:red"></i>');
+                                          $("#likeNumber"+postId).html('<strong id="LikeCount'+postId+'data-likeCount="'+likeCount+'">'+likeNumber+' likes</strong> ');
+
+                                        }else {
+                                            $("#likeSubmit"+postId).html('<i class="fa fa-heart-o fa-2x Like" aria-hidden="true"></i>' );
+                                            $("#likeNumber"+postId).html('<strong id="LikeCount'+postId+'data-likeCount="'+likeCount+'">'+likeNumber+' likes</strong> ');
+
+
+                                            // console.log("unliked " +  state)
                                         }
 
+
                          }
+
                 });
         });
     </script>

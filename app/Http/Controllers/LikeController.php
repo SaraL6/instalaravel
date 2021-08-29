@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Like;
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -32,6 +33,7 @@ class LikeController extends Controller
         if ($like) {
             // if its true we give it false, if its false we give it true
             $like->State = !$like->State;
+
             $like->save();
         } else {
             $like = Like::create([
@@ -41,8 +43,14 @@ class LikeController extends Controller
 
             ]);
         }
-
-        return Redirect::to('/');
+        $conditions = [
+            ['State', 1]
+        ];
+          //return Redirect::to('/');.
+         // $likes= Like::all();
+          $likes= Like::where('post_id', $id)->where($conditions)->get();
+        //   dd($likes);
+         return [$like,$likes];
     }
 
 }

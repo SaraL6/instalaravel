@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->longText('caption')->nullable();
             $table->string('image');
-            $table->bigInteger('likes')->default(0);
+            // $table->bigInteger('likes')->default(0);
             $table->timestamps();
 
             $table->index('user_id');

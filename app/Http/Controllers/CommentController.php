@@ -26,25 +26,25 @@ class CommentController extends Controller
     {
 
         return Comment::all();
-        
+
     }
 
     public function showComments($postId)
     {
         $comments = Comment::all()->where('post_id', $postId);
-        
+
         foreach($comments as $comment)
             {
                 $comment['username'] = User::findOrFail($comment->user_id)->username;
 
-            }            
+            }
             // dd($comments);
 
             // return $output;
             return response()->json($comments);
 
 
-        
+
     }
 
     /**
@@ -70,7 +70,7 @@ class CommentController extends Controller
             'body' => $request->body,
             'user_id' => Auth::id(),
             'post_id' => $post->id
-         
+
 
         ]);
              $comment= Comment::where('id', $comment->id)->with('user')->first();
@@ -79,11 +79,11 @@ class CommentController extends Controller
                 return redirect()->route('posts.index', compact('post'));
             }
 
-            
+
             return 'success';
 
         }
-            
+
      /**
      * Display the specified resource.
      *
@@ -128,8 +128,7 @@ class CommentController extends Controller
     {
         //
     }
-    
-     
+
+
     }
 
-   

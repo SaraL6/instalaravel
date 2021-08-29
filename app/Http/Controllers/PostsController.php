@@ -18,7 +18,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        
+
        $posts= Post::all();
 
       return view('posts.index' ,compact('posts'));
@@ -26,7 +26,7 @@ class PostsController extends Controller
 
     public function explore()
     {
-        
+
     }
     public function create()
     {
@@ -44,7 +44,7 @@ class PostsController extends Controller
         $this->storeImage($post);
         $posts= Post::all();
 
-        return redirect()->route('home.index'); 
+        return redirect()->route('home.index');
 
 
     }
@@ -55,35 +55,35 @@ class PostsController extends Controller
             'caption' => ['nullable', 'string', 'max:255']
 
         ]));
-        
-        return redirect()->route('home.index'); 
+
+        return redirect()->route('home.index');
     }
 
 
 
     public function destroy(Post $post)
-    
+
     {
         $post->delete();
-        return redirect()->route('home.index'); 
+        return redirect()->route('home.index');
 
-     
+
     }
 
     public function show(Post $post)
     {
-       
+
     }
 
     public function updatelikes(Request $request, $post)
     {
-        
+
     }
 
     // methods for vue api requests
     public function vue_index()
     {
-      
+
     }
 
     private function storeImage($post) {
