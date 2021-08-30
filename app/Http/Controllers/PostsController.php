@@ -20,8 +20,8 @@ class PostsController extends Controller
     {
 
        $posts= Post::all();
-
-      return view('posts.index' ,compact('posts'));
+       $user = Auth::User();
+      return view('posts.index' ,compact('posts','user'));
     }
 
     public function explore()
@@ -51,7 +51,8 @@ class PostsController extends Controller
 
     public function update(Request $request, Post $post)
     {
-        $post->update($request->validate([
+        $user = Auth::User();
+        $post->where('user_id', $user->id)->update($request->validate([
             'caption' => ['nullable', 'string', 'max:255']
 
         ]));
