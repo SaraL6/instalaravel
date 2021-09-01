@@ -23,7 +23,7 @@ Auth::routes();
 
 
 //  Profile Route
-Route::get('/profile/{user}', 'UserController@index');
+Route::get('/profile/{user}', 'ProfilesController@index');
 Route::get('/profile/edit/{user}', 'UserController@edit');
 Route::patch('/profile/{user}', 'UserController@update')->name('profile.update');
 
@@ -36,13 +36,10 @@ Route::patch('/profile/{user}', 'UserController@update')->name('profile.update')
  Route::get('/post/show/{post}', 'PostsController@show')->name('post.show');
  Route::post('like/{like}', 'LikeController@update2')->name('like.create');
  Route::post('/p/{post}', 'PostsController@updatelikes')->name('post.update');
-
+Route::post('follow/{user}','FollowsController@store');
 
 
 
 //  Comment Route
 Route::get('/posts/{post}/comments', 'CommentController@showComments')->name('show.comments');
 Route::post('/posts/{post}/comment', 'CommentController@store')->name('post.comment');
-
-
-

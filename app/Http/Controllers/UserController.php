@@ -14,9 +14,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index()
     {
-        return view('profiles.index', compact('user'));
+
     }
 
     /**
@@ -59,6 +59,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+
         return view('profiles.edit', compact('user'));
 
     }
@@ -70,18 +71,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update( User $user)
     {
-        $user->update($request->validate([
+        $data=request()->validate([
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'bio' => ['sometimes', 'string', 'nullable'],
-            'website' => ['sometimes', 'nullable'],
+            'website' => ['url','sometimes', 'nullable'],
             'image' => ['sometimes', 'image', 'max:3000']
-        ]));
-
-        $this->storeImage($user);
+        ]);
+        auth()->user->update($data);
+        // $this->storeImage($user);
 
         // if (request('image')) {
         //     $imagePath = request('image')->store('/img', 'public');
@@ -90,8 +91,8 @@ class UserController extends Controller
         //     $imageArray = ['image' => $imagePath];
         // }
 
-        
-        return view('profiles.index', compact('user'));
+
+        return  redirect("/profile/{$user->id}");
     }
 
     /**

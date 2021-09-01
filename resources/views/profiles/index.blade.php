@@ -17,39 +17,39 @@ STORIES
         <div class="col-9 pt-5">
             <div class="d-flex align-items-center">
                 <h1>{{ $user->username }}</h1>
-                
-                {{-- @can('update', $user->profile) --}}
+
+                @if($user->id==Auth::User()->id)
                     <a class="btn btn-outline-secondary ml-3"  role="button" href="/profile/edit/{{Auth::user()->id}}"  >
                         Edit Profile
                     </a>
-                {{-- @else --}}
+                 @else
                     {{-- <follow-button user-id="{{ $user->username }}" follows="{{ $follows }}"></follow-button> --}}
-                    {{-- <follow-button >FOLLOW BUTTON</follow-button> --}}
-                {{-- @endcan --}}
+                    <follow-button user-id="{{$user->id}}" ></follow-button>
+                 @endif
 
             </div>
             <div class="d-flex">
                 <div class="pr-5"><strong>
                      {{ count($user->posts) }}
                      </strong> posts</div>
-                <div class="pr-5"><strong> 
+                <div class="pr-5"><strong>
                     {{-- {{ $followersCount }}  --}}
                 </strong> followers</div>
-                <div class="pr-5"><strong> 
+                <div class="pr-5"><strong>
                     {{-- {{ $followingCount }}  --}}
                 </strong> following</div>
             </div>
             <div class="pt-4 font-weight-bold ">
                 {{ $user->name }}
             </div>
-            {{-- <div>
+            <div>
                 {!! nl2br(e($user->profile->bio)) !!}
             </div>
-            <div class="font-weight-bold">
+            <div class="font-weight-bold pb-4">
                 <a href="{{ $user->profile->website }}" target="_blanc">
                     {{ $user->profile->website }}
                 </a>
-            </div> --}}
+            </div>
 
         </div>
     </div>

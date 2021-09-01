@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row justify-content-center">
             {{-- Main section --}}
-            <main class="main col-md-8 px-2 py-3">
+            <main class="main col-md-6 px-2 py-3">
 
                 @forelse ($posts->sortByDesc('created_at') as $post)
 
@@ -19,9 +19,9 @@
                         <div class="card-header d-flex justify-content-between align-items-center bg-white pl-3 pr-1 py-2">
                             <div class="d-flex align-items-center">
                                 <a href="/profile/{{$post->user->id}}" style="width: 32px; height: 32px;">
-                                    <img src="{{asset('storage/'.Auth::user()->image)}}" class="rounded-circle Card_Header_IMG">
+                                    <img src="{{asset('storage/'.Auth::user()->image)}}" class="rounded-circle Card_Header_IMG" style="width: 32px; height: 32px;">
                                 </a>
-                                <a href="/profile/{{$post->user->username}}" class="my-0 ml-3 text-dark text-decoration-none">
+                                <a href="/profile/{{$post->user->id}}" class="my-0 ml-3 text-dark text-decoration-none">
                                     {{ $post->user->username }}
                                 </a>
                             </div>
@@ -58,8 +58,8 @@
                         </div>
 
                         <!-- Card Image -->
-                        <div class="js-post" ondblclick="showLike(this, 'like_{{ $post->id }}')">
-                            <i class="fa fa-heart"></i>
+                        <div class="js-post" ondblclick="showLike(this, 'like_{{ $post->id }}')" >
+                            <i class="fa fa-heart fa-2x Like" style="color:red"></i>
                             <img class="card-img" src="{{ asset("storage/$post->image") }}" alt="post image" style="max-height: 767px">
                         </div>
 
@@ -140,7 +140,7 @@
                             <div class="flex-row">
 
                                  <!-- Likes -->
-                                @if (count($post->like->where('State',true)) > 0)
+                                @if (count($post->like->where('State',true)) > 1)
                                     <h6 class="card-title" id="likeNumber{{$post->id}}" >
 
                                         <strong id="LikeCount{{$post->id}}" data-likeCount="{{ count($post->like->where('State',true)) }}">{{ count($post->like->where('State',true)) }} likes</strong>
@@ -148,8 +148,16 @@
                                         echo '<pre> operation : ', print_r($post->like->where('State',true), true) ,'</pre>';
                                     @endphp --}}
                                     </h6>
-                                @endif
+                                @elseif (count($post->like->where('State',true)) === 1)
 
+                                <h6 class="card-title" id="likeNumber{{$post->id}}" >
+
+                                    <strong id="LikeCount{{$post->id}}" data-likeCount="{{ count($post->like->where('State',true)) }}">{{ count($post->like->where('State',true)) }} like</strong>
+                                    {{-- @php
+                                    echo '<pre> operation : ', print_r($post->like->where('State',true), true) ,'</pre>';
+                                @endphp --}}
+                                </h6>
+                                @endif
                                 {{-- Post Caption --}}
 
                                 <p class="card-text mb-1" id="oldCaption{{$post->id}}" >
@@ -257,7 +265,7 @@
                     <!-- User Info -->
                     <div class="d-flex align-items-center mb-3">
                         <a href="/profile/{{Auth::user()->username}}" style="width: 56px; height: 56px;">
-                            <img src="{{asset('storage/'.Auth::user()->image)}}" class="rounded-circle User_Info_IMG">
+                            <img src="{{asset('storage/'.Auth::user()->image)}}" class="rounded-circle User_Info_IMG" style="width: 32px; height: 32px;">
                         </a>
                         <div class='d-flex flex-column pl-3'>
                             <a href="/profile/{{Auth::user()->username}}" class='h6 m-0 text-dark text-decoration-none' >
@@ -450,24 +458,38 @@
                          $(this).attr('data-like', state);
                           const likeCount= response[1];
                           const likeNumber= likeCount.length;
-                          //console.log(likeNumber);
-                            console.log( $("#LikeCount"+postId));
+                          console.log(likeNumber);
+
 
                           $("#LikeCount"+postId).attr("data-likeCount",likeNumber);
 
-                          console.log( $("#LikeCount"+postId));
+
                                      if(state) {
 
-                                         //  console.log("liked  " + state)
+
                                          $("#likeSubmit"+postId).html(' <i class="fa fa-heart fa-2x Like" style="color:red"></i>');
-                                          $("#likeNumber"+postId).html('<strong id="LikeCount'+postId+'data-likeCount="'+likeCount+'">'+likeNumber+' likes</strong> ');
+                                         if (likeNumber > 1){
+                                             console.log("likeNumber > 1")
+                                            $("#likeNumber"+postId).html('<strong id="LikeCount'+postId+'data-likeCount="'+likeCount+'">'+likeNumber+' likes</strong> ');
+                                         }else if (likeNumber === 1){
+                                            console.log("likeNumber === 1")
+                                            $("#likeNumber"+postId).html('<strong id="LikeCount'+postId+'data-likeCount="'+likeCount+'">'+likeNumber+' like</strong> ');
+                                         }
+
 
                                         }else {
                                             $("#likeSubmit"+postId).html('<i class="fa fa-heart-o fa-2x Like" aria-hidden="true"></i>' );
+                                            if (likeNumber > 1){
+                                                console.log("likeNumber > 1")
                                             $("#likeNumber"+postId).html('<strong id="LikeCount'+postId+'data-likeCount="'+likeCount+'">'+likeNumber+' likes</strong> ');
+                                         }else if (likeNumber === 1){
+                                            console.log("likeNumber === 1")
+                                            $("#likeNumber"+postId).html('<strong id="LikeCount'+postId+'data-likeCount="'+likeCount+'">'+likeNumber+' like</strong> ');
+                                         }
 
 
-                                            // console.log("unliked " +  state)
+
+
                                         }
 
 

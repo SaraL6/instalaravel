@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'username', 'password','bio','website','image',
+        'name', 'email', 'username', 'password','image',
     ];
 
     /**
@@ -37,24 +37,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // protected static function boot()
-    // {
+    protected static function boot()
+    {
 
-    //     parent::boot();
+        parent::boot();
 
-    //     static::created(function ($user) {
-    //         $user->profile()->create([
-    //             // 'image' => '/profile/default.png',
-
-    //         ]);
-    //     });
-    // }
+        static::created(function ($user) {
+            $user->profile()->create();
+        });
+    }
 
     // Relationship between User & Profile
-    // public function profile()
-    // {
-    //     return $this->hasOne(Profile::class);
-    // }
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
 
     public function posts()
     {
@@ -66,10 +63,10 @@ class User extends Authenticatable
     //     return $this->hasMany(Story::class);
     // }
 
-    // public function following()
-    // {
-    //     return $this->belongsToMany(Profile::class)->withTimestamps();
-    // }
+    public function following()
+    {
+        return $this->belongsToMany(Profile::class)->withTimestamps();
+    }
 
     // change default search by id to username for ex
     // public function getRouteKeyName()
