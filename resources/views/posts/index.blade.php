@@ -19,7 +19,7 @@
                         <div class="card-header d-flex justify-content-between align-items-center bg-white pl-3 pr-1 py-2">
                             <div class="d-flex align-items-center">
                                 <a href="/profile/{{$post->user->id}}" style="width: 32px; height: 32px;">
-                                    <img src="{{asset('storage/'.Auth::user()->image)}}" class="rounded-circle Card_Header_IMG" style="width: 32px; height: 32px;">
+                                    <img src="{{ $post->user->profile->profileImage() }}" class="rounded-circle Card_Header_IMG" style="width: 32px; height: 32px;">
                                 </a>
                                 <a href="/profile/{{$post->user->id}}" class="my-0 ml-3 text-dark text-decoration-none">
                                     {{ $post->user->username }}

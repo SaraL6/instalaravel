@@ -57,12 +57,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
-    {
 
-        return view('profiles.edit', compact('user'));
-
-    }
 
     /**
      * Update the specified resource in storage.
@@ -77,9 +72,6 @@ class UserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
-            'bio' => ['sometimes', 'string', 'nullable'],
-            'website' => ['url','sometimes', 'nullable'],
-            'image' => ['sometimes', 'image', 'max:3000']
         ]);
         auth()->user->update($data);
         // $this->storeImage($user);

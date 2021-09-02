@@ -4,28 +4,28 @@
 <div class="container">
     <div class="row ">
         <div class="col-3 p-5">
-STORIES
+{{-- STORIES --}}
             {{-- @if ($user->stories->count() > 0)
                 <a href="/stories/{{$user->username}}" >
                     <img src="{{ asset($user->profile->getProfileImage()) }}" class="border-linear  w-100">
                 </a>
-            @else
-                <img src="{{ asset($user->profile->getProfileImage()) }}" class="rounded-circle w-100">
-            @endif --}}
+            @else --}}
+                <img src="{{ $user->profile->profileImage() }}" class="rounded-circle w-100">
+            {{-- @endif --}}
         </div>
 
         <div class="col-9 pt-5">
             <div class="d-flex align-items-center">
                 <h1>{{ $user->username }}</h1>
 
-                @if($user->id==Auth::User()->id)
+                @can ('update',$user->profile)
                     <a class="btn btn-outline-secondary ml-3"  role="button" href="/profile/edit/{{Auth::user()->id}}"  >
                         Edit Profile
                     </a>
                  @else
                     {{-- <follow-button user-id="{{ $user->username }}" follows="{{ $follows }}"></follow-button> --}}
                     <follow-button user-id="{{$user->id}}" ></follow-button>
-                 @endif
+                 @endcan
 
             </div>
             <div class="d-flex">
@@ -59,7 +59,7 @@ STORIES
         @forelse ($user->posts as $post)
             <div class="col-4 col-md-4 mb-4 align-self-stretch">
                 {{-- <a href="/p/{{ $post->id }}"> --}}
-                    <img class="img border" height="300" src="{{ asset("storage/$post->image") }}">
+                    <img class="img border" height="300" src="{{ $post->user->profile->profileImage() }}">
                 {{-- </a> --}}
             </div>
         @empty

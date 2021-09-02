@@ -12,7 +12,7 @@
                         @csrf
                         @method('PATCH')
 
-                        <div class="form-group row ">
+                        {{-- <div class="form-group row ">
                             <label for="name" class="col-md-4 col-form-label text-md-right"><strong> {{ __('Name') }}</strong></label>
 
                             <div class="col-md-6">
@@ -38,13 +38,13 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group row ">
                             <label for="website" class="col-md-4 col-form-label text-md-right"><strong> {{ __('Website') }}</strong></label>
 
                             <div class="col-md-6">
-                                <input id="website" type="text" class="form-control @error('website') is-invalid @enderror" name="website" value="{{ old('website') ?? $user->website }}" autocomplete="new-website">
+                                <input id="website" type="text" class="form-control @error('website') is-invalid @enderror" name="website" value="{{ old('website') ?? $user->profile->website }}" autocomplete="new-website">
 
                                 @error('website')
                                     <span class="invalid-feedback" role="alert">
@@ -58,7 +58,7 @@
                             <label for="bio" class="col-md-4 col-form-label text-md-right"><strong> {{ __('Bio') }}</strong></label>
 
                             <div class="col-md-6">
-                                <textarea name="bio" id="bio" class="form-control @error('bio') is-invalid @enderror" cols="30" rows="10" autocomplete="new-bio">{{ old('bio') ?? $user->bio }}</textarea>
+                                <input type="text" name="bio" id="bio" class="form-control @error('bio') is-invalid @enderror" cols="30" rows="10" autocomplete="new-bio" value="{{ old('bio') ?? $user->profile->bio }}"></input>
                                 @error('bio')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -68,7 +68,7 @@
                         </div>
 
 
-                        <div class="form-group row">
+                        {{-- <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right"><strong> {{ __('Email') }}</strong></label>
 
                             <div class="col-md-6">
@@ -80,17 +80,17 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group row">
-        
-                            <label for="image" class="col-md-4 col-form-label text-md-right"><strong>Change Profile Photo</strong></label> 
-                            
+
+                            <label for="image" class="col-md-4 col-form-label text-md-right"><strong>Change Profile Photo</strong></label>
+
                             <div class="col-md-6 ">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image" name="image"> 
-                                    <label class="custom-file-label" for="image">{{ old('image') ?? "Upload Photo..." }}</label> 
-                                    
+                                    <input type="file" class="custom-file-input @error('image') is-invalid @enderror" id="image" name="image">
+                                    <label class="custom-file-label" for="image">{{ old('image') ?? "Upload Photo..." }}</label>
+
                                     @error('image')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
