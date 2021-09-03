@@ -265,7 +265,7 @@
                     <!-- User Info -->
                     <div class="d-flex align-items-center mb-3">
                         <a href="/profile/{{Auth::user()->username}}" style="width: 56px; height: 56px;">
-                            <img src="{{asset('storage/'.Auth::user()->image)}}" class="rounded-circle User_Info_IMG" style="width: 32px; height: 32px;">
+                            <img src="{{ $user->profile->profileImage() }}" class="rounded-circle User_Info_IMG" style="width: 32px; height: 32px;">
                         </a>
                         <div class='d-flex flex-column pl-3'>
                             <a href="/profile/{{Auth::user()->username}}" class='h6 m-0 text-dark text-decoration-none' >
@@ -445,10 +445,7 @@
                         type: "POST",
                         url:  '/like/'+postId,
                         data: {
-
                         _token: _token
-
-
                         },
                         success:function(response){
 
@@ -458,32 +455,33 @@
                          $(this).attr('data-like', state);
                           const likeCount= response[1];
                           const likeNumber= likeCount.length;
-                          console.log(likeNumber);
-
-
+                         // console.log(likeNumber);
                           $("#LikeCount"+postId).attr("data-likeCount",likeNumber);
-
 
                                      if(state) {
 
-
                                          $("#likeSubmit"+postId).html(' <i class="fa fa-heart fa-2x Like" style="color:red"></i>');
+
                                          if (likeNumber > 1){
-                                             console.log("likeNumber > 1")
+
+                                            // console.log("likeNumber > 1")
                                             $("#likeNumber"+postId).html('<strong id="LikeCount'+postId+'data-likeCount="'+likeCount+'">'+likeNumber+' likes</strong> ');
-                                         }else if (likeNumber === 1){
-                                            console.log("likeNumber === 1")
+
+                                             }else if (likeNumber === 1){
+                                            //console.log("likeNumber === 1")
                                             $("#likeNumber"+postId).html('<strong id="LikeCount'+postId+'data-likeCount="'+likeCount+'">'+likeNumber+' like</strong> ');
                                          }
 
 
                                         }else {
                                             $("#likeSubmit"+postId).html('<i class="fa fa-heart-o fa-2x Like" aria-hidden="true"></i>' );
+
                                             if (likeNumber > 1){
-                                                console.log("likeNumber > 1")
+                                                //console.log("likeNumber > 1")
                                             $("#likeNumber"+postId).html('<strong id="LikeCount'+postId+'data-likeCount="'+likeCount+'">'+likeNumber+' likes</strong> ');
-                                         }else if (likeNumber === 1){
-                                            console.log("likeNumber === 1")
+
+                                            }else if (likeNumber === 1){
+                                            //console.log("likeNumber === 1")
                                             $("#likeNumber"+postId).html('<strong id="LikeCount'+postId+'data-likeCount="'+likeCount+'">'+likeNumber+' like</strong> ');
                                          }
 

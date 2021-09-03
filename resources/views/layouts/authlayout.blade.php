@@ -9,8 +9,7 @@
     {{-- Title --}}
     <title>{{ config('app.name', 'InstaClone') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -100,5 +99,7 @@
 		}
 
 	</script>
+     <!-- Scripts -->
+     <script src="{{ asset('js/app.js') }}" defer></script>
 </body>
 </html>

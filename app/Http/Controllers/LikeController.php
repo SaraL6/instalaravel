@@ -51,6 +51,8 @@ class LikeController extends Controller
           $likes= Like::where('post_id', $id)->where($conditions)->get();
         //   dd($likes);
          return [$like,$likes];
+        // return route('home.index', compact('like','likes'));
+
     }
 
 }
