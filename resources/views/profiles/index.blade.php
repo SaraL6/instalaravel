@@ -24,7 +24,7 @@
                     </a>
                  @else
                     {{-- <follow-button user-id="{{ $user->username }}" follows="{{ $follows }}"></follow-button> --}}
-                    <follow-button user-id="{{$user->id}}" ></follow-button>
+                    <follow-button user-id="{{$user->id}}" follows="{{$follows}}" ></follow-button>
                  @endcan
 
             </div>
@@ -33,10 +33,10 @@
                      {{ count($user->posts) }}
                      </strong> posts</div>
                 <div class="pr-5"><strong>
-                    {{-- {{ $followersCount }}  --}}
+                    {{ $user->profile->followers->count() }}
                 </strong> followers</div>
                 <div class="pr-5"><strong>
-                    {{-- {{ $followingCount }}  --}}
+                    {{ $user->following->count() }}
                 </strong> following</div>
             </div>
             <div class="pt-4 font-weight-bold ">

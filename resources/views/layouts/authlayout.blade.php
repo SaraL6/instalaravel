@@ -82,6 +82,8 @@
 		</div>
 	</div>
 
+    <script  src="{{ asset('js/app.js') }}"  ></script>
+
 	<script>
 
 		document.querySelector('.login100-form').addEventListener('submit', function(e){
@@ -100,6 +102,6 @@
 
 	</script>
      <!-- Scripts -->
-     <script src="{{ asset('js/app.js') }}" defer></script>
+
 </body>
 </html>
