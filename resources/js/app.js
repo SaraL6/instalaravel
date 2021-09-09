@@ -5,6 +5,7 @@
  */
  import $ from 'jquery';
 window.$ = window.jQuery = $;
+import store from "./store";
 
 
 require("./bootstrap");
@@ -26,6 +27,10 @@ Vue.component(
     "follow-button",
     require("./components/FollowButton.vue").default
 );
+Vue.component(
+    "followers-count",
+    require("./components/FollowersCount.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -34,5 +39,6 @@ Vue.component(
  */
 
 const app = new Vue({
+    store,
     el: "#app"
 });

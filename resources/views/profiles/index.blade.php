@@ -24,20 +24,21 @@
                     </a>
                  @else
                     {{-- <follow-button user-id="{{ $user->username }}" follows="{{ $follows }}"></follow-button> --}}
-                    <follow-button user-id="{{$user->id}}" follows="{{$follows}}" ></follow-button>
+                    <follow-button  user-id="{{$user->id}}" follows="{{$follows}}" followers={{$followers}}  class="followSubmit"></follow-button>
                  @endcan
 
             </div>
             <div class="d-flex">
                 <div class="pr-5"><strong>
-                     {{ count($user->posts) }}
-                     </strong> posts</div>
+                     {{ $postCount }}
+                     </strong> Posts</div>
+                <div class="pr-5" >
+                    {{-- <strong id="followCount{{$user->profile}}" data-followersCount="{{ $user->profile->followers->count() }}">{{$followersCount}}</strong> --}}
+                    <followers-count  user-id="{{$user->id}}"  follows="{{$follows}}" followers={{$followers}} ></followers-count>
+                    </div>
                 <div class="pr-5"><strong>
-                    {{ $user->profile->followers->count() }}
-                </strong> followers</div>
-                <div class="pr-5"><strong>
-                    {{ $user->following->count() }}
-                </strong> following</div>
+                    {{ $followingCount }}
+                </strong> Following</div>
             </div>
             <div class="pt-4 font-weight-bold ">
                 {{ $user->name }}
@@ -76,3 +77,5 @@
     </div>
 </div>
 @endsection
+
+
