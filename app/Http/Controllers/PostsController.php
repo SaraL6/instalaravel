@@ -19,9 +19,14 @@ class PostsController extends Controller
     public function index()
     {
         $users = auth()->user()->following()->pluck('profiles.user_id');
-       $posts= Post::whereIn('user_id',$users)->with('user')->latest()->get();
+         $userId = Auth::User()->id;
+         $user = Auth::User();
+         $multiusers= [$users , $userId];
+       // dd($users,$user);
+       $posts= Post::whereIn('user_id',$multiusers)->with('user')->latest()->get() ;
 
-       $user = Auth::User();
+
+
       return view('posts.index' ,compact('posts','user'));
     }
 
@@ -31,7 +36,8 @@ class PostsController extends Controller
     }
     public function create()
     {
-        return view('posts.create');
+        $user = Auth::User();
+        return view('posts.create' ,compact('user'));
 
     }
 
@@ -74,6 +80,8 @@ class PostsController extends Controller
 
     public function show(Post $post)
     {
+
+        return view('posts.show',compact('post'));
 
     }
 

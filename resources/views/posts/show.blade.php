@@ -13,7 +13,7 @@
 
                     <!-- Card Image -->
                     <div class="col-md-8 h-100">
-                        <img src="{{ asset("storage/$post->image") }}" class="w-100 h-100">
+                        <img src="/storage/{{$post->image}}" class="w-100 h-100">
                     </div>
 
                     <div class="col-md-4 h-100">
@@ -23,7 +23,7 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center">
                                     <a href="/profile/{{$post->user->username}}" style="width: 32px; height: 32px;">
-                                        <img src="{{ asset($post->user->profile->getProfileImage()) }}" class="rounded-circle w-100">
+                                        <img src="{{ $post->user->profile->profileImage() }}" class="rounded-circle w-100">
                                     </a>
                                     <a href="/profile/{{$post->user->username}}" class="my-0 ml-3 text-dark text-decoration-none">
                                         <strong> {{ $post->user->name }}</strong>

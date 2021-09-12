@@ -56,15 +56,15 @@
                 </button>
 
                 <!-- Links -->
-                <div class="navbar-collapse collapse justify-content-stretch" id="navbar5">
+                <div class="navbar-collapse collapse d-flex justify-content-end" id="navbar5">
 
-                    <form action="/search" method="POST" role="search" class="m-auto d-inline w-80">
+                    {{-- <form action="/search" method="POST" role="search" class="m-auto d-inline w-80">
                         @csrf
                         <div class="input-group">
                             <input class="form-control" name="q" type="search" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit" style="border-color: #ced4da"><i class="fa fa-search"></i></button>
                         </div>
-                    </form>
+                    </form> --}}
 
                     <ul class="navbar-nav">
                         <!-- Authentication Links -->
@@ -96,7 +96,7 @@
                             <li class="nav-item pl-2 ">
                                 <a href="/profile/{{Auth::user()->id}}" class="nav-link " style="width: 42px; height: 22px; padding-top: 6px;" >
 
-                                    <img src="{{asset('storage/'.Auth::user()->image)}}" class=" rounded-circle w-100 " style="clip-path: circle(40%)">
+                                    <img src="{{ $user->profile->profileImage() }}" class=" rounded-circle w-100 " style="clip-path: circle(40%)">
                                     {{-- <i class="far fa-user fa-2x"></i> --}}
                                 </a>
                             </li>
@@ -117,9 +117,9 @@
                                         {{-- @endcan --}}
 
                                         {{-- @can('update', Auth::user()->profile) --}}
-                                            <a class="dropdown-item" href="/stories/create" role="button">
+                                            {{-- <a class="dropdown-item" href="/stories/create" role="button">
                                                 Add New Story
-                                            </a>
+                                            </a> --}}
                                         {{-- @endcan --}}
 
                                         <a class="dropdown-item" href="{{ route('logout') }}"
